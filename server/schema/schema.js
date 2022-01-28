@@ -3,7 +3,7 @@ const graphql = require("graphql"); //use graphql package
 const _ = require("lodash");
 
 const shoes = require("../models/shoe");
-const owners = re
+const owners = require("../models/owner");
 
 /*Getting GraphQLObjectType function from 'graphql' to define the (dataType) 
  structure of our queries and their model type.
@@ -17,23 +17,7 @@ const {
   GraphQLList
 } = graphql;
 
-const ShoesArray = [
-    { id: "1", name: "Air Force 1", model: "2007", company: "Nike", ownerId: "1" },
-    { id: "2", name: "Original Yellow Boot", model: "1973", company: "Timberland", ownerId: "2" },
-    { id: "3", name: "Low-Top-Vans", model: "1966", company: "Vans", ownerId: "1" },
-    { id: "4", name: "Plain Toe Boot", model: "1928", company: "Cole Haan", ownerId: "2" },
-    { id: "5", name: "Mountain Light Boot", model: "1932", company: "Danner", ownerId: "3" },
-    { id: "6", name: "Flu Games", model: "1997", company: "Jordan", ownerId: "3" }
-  ];
 
-  var OwnersArray = [
-    { id: "1", name: "Quinton Prothro", age: 34, gender: "male" },
-    { id: "2", name: "Larry ", age: 39, gender: "male" },
-    { id: "3", name: "Leslie", age: 27, gender: "female" },
-    { id: "4", name: "Mable", age: 41, gender: "female" },
-    { id: "5", name: "Jeremy", age: 28, gender: "male" }
-  ];
-  
 
 //Defining CarType with its fields.
 const ShoeType = new GraphQLObjectType({
