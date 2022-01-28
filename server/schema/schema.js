@@ -1,6 +1,6 @@
 const graphql = require("graphql"); //use graphql package
 
-
+const _ = require("lodash");
 
 /*Getting GraphQLObjectType function from 'graphql' to define the (dataType) 
  structure of our queries and their model type.
@@ -10,7 +10,8 @@ const {
   GraphQLID,
   GraphQLString,
   GraphQLInt,
-  GraphQLSchema
+  GraphQLSchema,
+  GraphQLList
 } = graphql;
 
 const ShoesArray = [
@@ -92,16 +93,16 @@ const ShoeType = new GraphQLObjectType({
         }
       },//owners ends here
       shoes : {
-          type : new GraphQLList(CarType),
+          type : new GraphQLList(ShoeType),
           resolve(parent,args){
               return CarsArray;
           }
       },//cars query
-      owners : {
-          type : new GraphQLList(OwnerType),
-          resolve(parent,args){
-              return OwnersArray;
-          }
+      owners: {
+        type: new GraphQLList(OwnerType),
+        resolve(parent, args) {
+          return owners.find({});
+        }
       }
     } //fields end here
   });
