@@ -27,12 +27,12 @@ const ShoeType = new GraphQLObjectType({
       name: { type: GraphQLString },
       model: { type: GraphQLInt },
       company: { type: GraphQLString },
-      owner : { //Supporting pwner query in carType
+      owner : { 
           type: OwnerType,
           resolve(parent,args){
              return _.find(OwnersArray,{id:parent.ownerId});
           }
-      }//owner 
+      } 
     })
   });
   
@@ -44,7 +44,7 @@ const ShoeType = new GraphQLObjectType({
       name: { type: GraphQLString },
       age: { type: GraphQLInt },
       gender: { type: GraphQLString },
-      cars : {  // Supporting list of shoes query in Owner type
+      shoes : {  
           type : new GraphQLList(ShoeType),
           resolve(parent,args){
               return _.filter(ShoesArray,{ownerId : parent.id});
@@ -69,7 +69,7 @@ const ShoeType = new GraphQLObjectType({
            * With the help of lodash library(_), we are trying to find car with id from 'CarsArray'
            * and returning its required data to calling tool.
            */
-          return _.find(ShoesArray, { id: args.id });
+          
         } //resolve function
       }, //car query ends here
       owner: {
