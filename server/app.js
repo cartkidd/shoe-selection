@@ -1,5 +1,6 @@
 const express = require("express");
 const { graphqlHTTP } = require('express-graphql');
+const mongoose = require("mongoose")
 
 
 const schema = require("./schema/schema");
@@ -7,10 +8,21 @@ const schema = require("./schema/schema");
 
 const app = express();
 
-app.use('/graphql', graphqlHTTP({
-    schema:schema,
-    graphiql:true
-}));
+mongoose.connect(
+    "mongodb://test:test123@ds145434.mlab.com:45434/gql-practice",
+    { useNewUrlParser: true },
+    () => {
+      console.log("Connect with DB successfully.");
+    }
+  );
+
+app.use(
+    "/graphql",
+    graphqlHTTP({
+      schema: schema,
+      graphiql: true
+    })
+  );
 
 
 //When our application starts, it will listen on port 4000
