@@ -2,7 +2,8 @@ const graphql = require("graphql"); //use graphql package
 
 const _ = require("lodash");
 
-const shoes = require
+const shoes = require("../models/shoe");
+const owners = re
 
 /*Getting GraphQLObjectType function from 'graphql' to define the (dataType) 
  structure of our queries and their model type.
