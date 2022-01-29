@@ -30,7 +30,7 @@ const ShoeType = new GraphQLObjectType({
       owner : { 
           type: OwnerType,
           resolve(parent,args){
-             return _.find(OwnersArray,{id:parent.ownerId});
+             //return _.find(OwnersArray,{id:parent.ownerId});
           }
       } 
     })
@@ -47,7 +47,7 @@ const ShoeType = new GraphQLObjectType({
       shoes : {  
           type : new GraphQLList(ShoeType),
           resolve(parent,args){
-              return _.filter(ShoesArray,{ownerId : parent.id});
+              //return _.filter(ShoesArray,{ownerId : parent.id});
           }
       }
     })
@@ -76,27 +76,50 @@ const ShoeType = new GraphQLObjectType({
         type: OwnerType,
         args: { id: { type: GraphQLID } },
         resolve(parent, args) {
-          return _.find(OwnersArray, { id: args.id });
+          //return _.find(OwnersArray, { id: args.id });
         }
       },//owners ends here
       shoes : {
           type : new GraphQLList(ShoeType),
           resolve(parent,args){
-              return CarsArray;
+              //return CarsArray;
           }
-      },//cars query
+      },//shoes query
       owners: {
         type: new GraphQLList(OwnerType),
         resolve(parent, args) {
-          return owners.find({});
+          //return owners.find({});
         }
       }
     } //fields end here
   });
+
+  const Mutation = new GraphQLObjectType({
+    name: "Mutation",
+    fields: {
+      addOwner: {    // To add Owner in DB
+        type: OwnerType,
+        args: {
+          name: { type: GraphQLString },
+          age: { type: GraphQLInt },
+          gender: { type: GraphQLString }
+        },
+        resolve(parent, args) {
+          let owner = new owners({
+            name: args.name,
+            age: args.age,
+            gender: args.gender
+          });
+          return owner.save(); //create owner data in mlab
+        }
+      }
+    } //fields ends here
+  });
   
   //exporting 'GraphQLSchema with RootQuery' for GraphqlHTTP middleware.
   module.exports = new GraphQLSchema({
-    query: RootQuery
+    query: RootQuery,
+    Mutation: Mutation
   });
   
   
