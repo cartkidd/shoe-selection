@@ -2,9 +2,9 @@ const graphql = require("graphql"); //use graphql package
 
 const _ = require("lodash");
 
-const cars = require("../models/car");
+const Shoes = require("../models/shoe");
 const owners = require("../models/owner");
-const shoe = require("../models/shoe");
+
 
 /*Getting GraphQLObjectType function from 'graphql' to define the (dataType) 
  structure of our queries and their model type.
@@ -19,8 +19,8 @@ const {
 } = graphql;
 
 //Defining CarType with its fields.
-const CarType = new GraphQLObjectType({
-  name: "Car",
+const ShoeType = new GraphQLObjectType({
+  name: "Shoe",
   fields: () => ({
     id: { type: GraphQLID },
     name: { type: GraphQLString },
@@ -43,10 +43,10 @@ const OwnerType = new GraphQLObjectType({
     name: { type: GraphQLString },
     age: { type: GraphQLInt },
     gender: { type: GraphQLString },
-    cars: {
+    shoes: {
       type: new GraphQLList(CarType),
       resolve(parent, args) {
-        return cars.find({ ownerId: parent.id });
+        return shoes.find({ ownerId: parent.id });
       }
     }
   })
@@ -58,8 +58,8 @@ const RootQuery = new GraphQLObjectType({
   fields: {
     // Fields here will be the query for frontends
     //We are defining a 'car' query which can take (car ID ) to search in DB.
-    car: {
-      type: CarType, //Defining model for car Query
+    shoe: {
+      type: ShoeType, //Defining model for car Query
       args: { id: { type: GraphQLID } }, //args field to extract
       // argument came with car query, e.g : Id of the car object to extract its details.
       resolve(parent, args) {
@@ -68,7 +68,7 @@ const RootQuery = new GraphQLObjectType({
          * With the help of lodash library(_), we are trying to find car with id from 'CarsArray'
          * and returning its required data to calling tool.
          */
-        return cars.findById(args.id);
+        return shoes.findById(args.id);
       } //resolve function
     }, //car query ends here
     owner: {
@@ -78,7 +78,7 @@ const RootQuery = new GraphQLObjectType({
         return owners.findById(args.id);
       }
     }, //owners ends here
-    cars: {
+    shoes: {
       type: new GraphQLList(CarType),
       resolve(parent, args) {
         return cars.find({});
