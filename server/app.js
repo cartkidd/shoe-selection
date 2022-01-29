@@ -9,7 +9,7 @@ const schema = require("./schema/schema");
 const app = express();
 
 mongoose.connect(
-    "mongodb://test:test123@ds145434.mlab.com:45434/gql-practice",
+    "mongodb://localhost:27017/myapp",
     { useNewUrlParser: true },
     () => {
       console.log("Connect with DB successfully.");
@@ -25,8 +25,8 @@ app.use(
   );
 
 
-//When our application starts, it will listen on port 4000
-app.listen(4000, () => {
-    console.log("Server is listening on port 4000");
+//When our application starts, it will listen on port 3000
+app.listen(3000, () => {
+    console.log("Server is listening on port 3000");
   });
   

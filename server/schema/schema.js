@@ -6,9 +6,7 @@ const Shoes = require("../models/shoe");
 const owners = require("../models/owner");
 
 
-/*Getting GraphQLObjectType function from 'graphql' to define the (dataType) 
- structure of our queries and their model type.
-*/
+
 const {
   GraphQLObjectType,
   GraphQLID,
@@ -18,7 +16,7 @@ const {
   GraphQLList
 } = graphql;
 
-//Defining CarType with its fields.
+
 const ShoeType = new GraphQLObjectType({
   name: "Shoe",
   fields: () => ({
@@ -35,7 +33,7 @@ const ShoeType = new GraphQLObjectType({
   })
 });
 
-//Defining CarType with its fields.
+
 const OwnerType = new GraphQLObjectType({
   name: "Owner",
   fields: () => ({
@@ -44,7 +42,7 @@ const OwnerType = new GraphQLObjectType({
     age: { type: GraphQLInt },
     gender: { type: GraphQLString },
     shoes: {
-      type: new GraphQLList(CarType),
+      type: new GraphQLList(ShoeType),
       resolve(parent, args) {
         return shoes.find({ ownerId: parent.id });
       }
@@ -56,30 +54,24 @@ const OwnerType = new GraphQLObjectType({
 const RootQuery = new GraphQLObjectType({
   name: "RootQueryType",
   fields: {
-    // Fields here will be the query for frontends
-    //We are defining a 'car' query which can take (car ID ) to search in DB.
+    
     shoe: {
-      type: ShoeType, //Defining model for car Query
-      args: { id: { type: GraphQLID } }, //args field to extract
-      // argument came with car query, e.g : Id of the car object to extract its details.
+      type: ShoeType, 
+      args: { id: { type: GraphQLID } }, 
       resolve(parent, args) {
-        //code to get value  from DB
-        /**
-         * With the help of lodash library(_), we are trying to find car with id from 'CarsArray'
-         * and returning its required data to calling tool.
-         */
+       
         return shoes.findById(args.id);
-      } //resolve function
-    }, //car query ends here
+      } 
+    }, 
     owner: {
       type: OwnerType,
       args: { id: { type: GraphQLID } },
       resolve(parent, args) {
         return owners.findById(args.id);
       }
-    }, //owners ends here
+    }, 
     shoes: {
-      type: new GraphQLList(CarType),
+      type: new GraphQLList(ShoeType),
       resolve(parent, args) {
         return cars.find({});
       }
@@ -90,7 +82,7 @@ const RootQuery = new GraphQLObjectType({
         return owners.find({});
       }
     }
-  } //fields end here
+  } 
 });
 
 const Mutation = new GraphQLObjectType({
@@ -111,7 +103,7 @@ const Mutation = new GraphQLObjectType({
         });
         return owner.save();
       }
-    }, //AddOwner ends here
+    }, 
     addShoe: {
       type: ShoeType,
       args: {
@@ -130,11 +122,11 @@ const Mutation = new GraphQLObjectType({
 
         return shoe.save();
       }
-    } //addCar
-  } //fields ends here
+    } 
+  } 
 });
 
-//exporting 'GraphQLSchema with RootQuery' for GraphqlHTTP middleware.
+
 module.exports = new GraphQLSchema({
   query: RootQuery,
   mutation: Mutation
