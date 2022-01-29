@@ -9,4 +9,4 @@ const getShoesQuery = gql`
   }
 `;
 
-export default getCarsQuery;
+export default getShoesQuery;
