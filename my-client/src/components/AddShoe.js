@@ -22,8 +22,8 @@ const AddCar = props => {
     <>
       <form>
         <div className="field">
-          <label>Car Name</label>
-          <input type="text" name="carName"></input>
+          <label>Shoe Name</label>
+          <input type="text" name="ShoeName"></input>
         </div>
         <div className="field">
           <label>Model</label>

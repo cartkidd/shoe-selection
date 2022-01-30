@@ -9,4 +9,15 @@ const getShoesQuery = gql`
   }
 `;
 
+
+const getOwnersQuery = gql`
+  {
+    owners {
+      name
+      id
+    }
+  }
+`;
+
+
 export default getShoesQuery;
